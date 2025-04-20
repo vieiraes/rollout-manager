@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model NotebookReplacement {
+  id              Int      @id @default(autoincrement())
+  oldNotebookId   Int      @unique
+  newNotebookId   Int      @unique
+  replacementDate DateTime @default(now())
+  
+  oldNotebook    Notebook @relation("OldNotebook", fields: [oldNotebookId], references: [id])
+  newNotebook    Notebook @relation("NewNotebook", fields: [newNotebookId], references: [id])
+}
+
+model Notebook {
+  id           Int           @id @default(autoincrement())
+  serviceTag   String        @unique
+  hostname     String?
+  brand        String        @default("Dell")
+  model        String        @default("5450")
+  notebookType NotebookType  @default(NEW)
+  ramConfig    RamConfig     @default(GB16)  // Corrigido de 16GB para GB16
+  status       Status        @default(PENDING_HOMOLOGATION)
+  
+  // Campos alterados
+  locationId   Int           @default(1)      // ID da sala relacionada
+  location     Room          @relation(fields: [locationId], references: [id])
+  
+  // Outros campos permanecem os mesmos
+  oldNotebookId Int?         @unique
+  oldNotebook  Notebook?     @relation("NotebookReplacement", fields: [oldNotebookId], references: [id])
+  newNotebook  Notebook?     @relation("NotebookReplacement")
+  responsibleAnalyst Analyst?
+  zurichEmployee     String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  movements    Movement[]
+  oldReplacement NotebookReplacement? @relation("OldNotebook")
+  newReplacement NotebookReplacement? @relation("NewNotebook")
+}
+
+model Movement {
+  id           Int      @id @default(autoincrement())
+  notebook     Notebook @relation(fields: [notebookId], references: [id])
+  notebookId   Int
+  
+  // Campos alterados para relacionamentos com Room
+  originRoomId Int
+  originRoom   Room     @relation("OriginRoom", fields: [originRoomId], references: [id])
+  
+  destinyRoomId Int
+  destinyRoom   Room    @relation("DestinyRoom", fields: [destinyRoomId], references: [id])
+  
+  // Outros campos permanecem os mesmos
+  previousStatus Status
+  newStatus     Status
+  analyst      Analyst
+  observation  String?
+  createdAt    DateTime @default(now())
+}
+
+model Room {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique  // Nome da sala (ex: ROOM_01)
+  description String?   // Descrição opcional da sala
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  notebooks   Notebook[] // Relação com notebooks nesta sala
+  
+  // Campos para rastrear movimentações de origem e destino
+  originsMovements  Movement[] @relation("OriginRoom")
+  destinyMovements  Movement[] @relation("DestinyRoom")
+}
+
+enum Status {
+  PENDING_HOMOLOGATION  // Alterado de "PENDENTE_HOMOLOGACAO"
+  HOMOLOGATED           // Alterado de "HOMOLOGADA"
+  IN_HOMOLOGATION       // Alterado de "EM_HOMOLOGACAO"
+  IN_ROLLOUT            // Alterado de "EM_ROLLOUT"
+  DELIVERED             // Alterado de "ENTREGUE"
+  RETURNED              // Alterado de "DEVOLUCAO"
+  COMPLETED             // Alterado de "FINALIZADO"
+}
+
+enum Analyst {
+  OSVALDO
+  DANIEL
+  THIAGO
+  BRUNO
+}
+
+enum NotebookType {
+  NEW                   // Alterado de "NOVO"
+  OLD                   // Alterado de "ANTIGO"
+}
+
+enum RamConfig {
+  GB16      // Simplificado de RAM_16GB
+  GB32      // Simplificado de RAM_32GB
+  OTHER     // Mantido
+}

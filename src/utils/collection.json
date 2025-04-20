@@ -1,0 +1,742 @@
+{
+    "info": {
+        "_postman_id": "a7e9c0d2-3f80-4c58-a4af-e5c21b3e95e9",
+        "name": "Rollout Manager API",
+        "description": "Collection para testar a API de gerenciamento de rollout de notebooks",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3344",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Notebooks",
+            "item": [
+                {
+                    "name": "Listar todos os notebooks",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar notebook por ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar notebook por Service Tag",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks/service-tag/ABC123",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks",
+                                "service-tag",
+                                "ABC123"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar inventário com filtros",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks/inventory?locationId=1&notebookType=NEW&status=PENDING_HOMOLOGATION",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks",
+                                "inventory"
+                            ],
+                            "query": [
+                                {
+                                    "key": "locationId",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "notebookType",
+                                    "value": "NEW"
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "PENDING_HOMOLOGATION"
+                                },
+                                {
+                                    "key": "responsibleAnalyst",
+                                    "value": "OSVALDO",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "zurichEmployee",
+                                    "value": "John Doe",
+                                    "disabled": true
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar novo notebook",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"ABC123\",\n  \"hostname\": \"NBZUR001\",\n  \"brand\": \"Dell\",\n  \"model\": \"5450\",\n  \"notebookType\": \"NEW\",\n  \"ramConfig\": \"GB16\",\n  \"status\": \"PENDING_HOMOLOGATION\",\n  \"locationId\": 1,\n  \"responsibleAnalyst\": \"OSVALDO\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar notebook",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks",
+                                "1"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"HOMOLOGATED\",\n  \"locationId\": 2,\n  \"responsibleAnalyst\": \"DANIEL\",\n  \"hostname\": \"NBZUR001-UPD\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir notebook",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks",
+                                "1"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Movements",
+            "item": [
+                {
+                    "name": "Listar todas as movimentações",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar movimentação por ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar movimentações por ID do notebook",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/notebook/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "notebook",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar movimentações por Service Tag",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/service-tag/ABC123",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "service-tag",
+                                "ABC123"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar movimentação por ID do notebook",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"notebookId\": 1,\n  \"originRoomId\": 1,\n  \"destinyRoomId\": 2,\n  \"previousStatus\": \"PENDING_HOMOLOGATION\",\n  \"newStatus\": \"IN_HOMOLOGATION\",\n  \"analyst\": \"OSVALDO\",\n  \"observation\": \"Iniciando processo de homologação\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Criar movimentação por Service Tag",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/by-service-tag",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "by-service-tag"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"ABC123\",\n  \"originRoomId\": 2,\n  \"destinyRoomId\": 1,\n  \"previousStatus\": \"IN_HOMOLOGATION\",\n  \"newStatus\": \"HOMOLOGATED\",\n  \"analyst\": \"OSVALDO\",\n  \"observation\": \"Homologação concluída com sucesso\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Rooms",
+            "item": [
+                {
+                    "name": "Listar todas as salas",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Buscar sala por ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms",
+                                "1"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Criar nova sala",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"ROOM_20\",\n  \"description\": \"Nova sala de treinamento\",\n  \"isActive\": true\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Atualizar sala",
+                    "request": {
+                        "method": "PATCH",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms/1",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms",
+                                "1"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"description\": \"Sala principal do depósito\",\n  \"isActive\": true\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Excluir sala",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms/4",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms",
+                                "4"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Exportação",
+            "item": [
+                {
+                    "name": "Exportar para Excel",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/export/excel",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "export",
+                                "excel"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Fluxo Completo de Rollout",
+            "item": [
+                {
+                    "name": "0. Criar salas base",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"ROOM_01\",\n  \"description\": \"Warehouse Room\",\n  \"isActive\": true\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "0.1. Criar sala de Lab",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"ROOM_11\",\n  \"description\": \"Lab Room\",\n  \"isActive\": true\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "0.2. Criar sala de Rollout",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/rooms",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "rooms"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"name\": \"ROOM_15\",\n  \"description\": \"Rollout Room\",\n  \"isActive\": true\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "1. Registrar notebook novo",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"NEW001\",\n  \"hostname\": \"NBZUR001\",\n  \"brand\": \"Dell\",\n  \"model\": \"5450\",\n  \"notebookType\": \"NEW\",\n  \"ramConfig\": \"GB16\",\n  \"status\": \"PENDING_HOMOLOGATION\",\n  \"locationId\": 1,\n  \"responsibleAnalyst\": \"OSVALDO\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "2. Registrar notebook antigo",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"OLD001\",\n  \"hostname\": \"NBZUR-OLD001\",\n  \"brand\": \"Dell\",\n  \"model\": \"3420\",\n  \"notebookType\": \"OLD\",\n  \"ramConfig\": \"GB16\",\n  \"status\": \"IN_ROLLOUT\",\n  \"locationId\": 3,\n  \"responsibleAnalyst\": \"THIAGO\",\n  \"zurichEmployee\": \"John Smith\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "3. Mover notebook para homologação",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/by-service-tag",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "by-service-tag"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"NEW001\",\n  \"originRoomId\": 1,\n  \"destinyRoomId\": 2,\n  \"previousStatus\": \"PENDING_HOMOLOGATION\",\n  \"newStatus\": \"IN_HOMOLOGATION\",\n  \"analyst\": \"OSVALDO\",\n  \"observation\": \"Iniciando processo de homologação\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "4. Concluir homologação",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/by-service-tag",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "by-service-tag"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"NEW001\",\n  \"originRoomId\": 2,\n  \"destinyRoomId\": 1,\n  \"previousStatus\": \"IN_HOMOLOGATION\",\n  \"newStatus\": \"HOMOLOGATED\",\n  \"analyst\": \"OSVALDO\",\n  \"observation\": \"Homologação concluída com sucesso\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "5. Iniciar rollout",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/by-service-tag",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "by-service-tag"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"NEW001\",\n  \"originRoomId\": 1,\n  \"destinyRoomId\": 3,\n  \"previousStatus\": \"HOMOLOGATED\",\n  \"newStatus\": \"IN_ROLLOUT\",\n  \"analyst\": \"THIAGO\",\n  \"observation\": \"Iniciando processo de rollout para John Smith\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "6. Verificar status atual do notebook",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks/service-tag/NEW001",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks",
+                                "service-tag",
+                                "NEW001"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "7. Registrar entrega",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/by-service-tag",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "by-service-tag"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"NEW001\",\n  \"originRoomId\": 3,\n  \"destinyRoomId\": 3,\n  \"previousStatus\": \"IN_ROLLOUT\",\n  \"newStatus\": \"DELIVERED\",\n  \"analyst\": \"THIAGO\",\n  \"observation\": \"Notebook entregue para John Smith\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "8. Registrar devolução do notebook antigo",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/by-service-tag",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "by-service-tag"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"OLD001\",\n  \"originRoomId\": 3,\n  \"destinyRoomId\": 1,\n  \"previousStatus\": \"IN_ROLLOUT\",\n  \"newStatus\": \"RETURNED\",\n  \"analyst\": \"THIAGO\",\n  \"observation\": \"Notebook antigo devolvido por John Smith\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "9. Finalizar processo",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{baseUrl}}/movements/by-service-tag",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "movements",
+                                "by-service-tag"
+                            ]
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"serviceTag\": \"OLD001\",\n  \"originRoomId\": 1,\n  \"destinyRoomId\": 1,\n  \"previousStatus\": \"RETURNED\",\n  \"newStatus\": \"COMPLETED\",\n  \"analyst\": \"BRUNO\",\n  \"observation\": \"Processo de substituição finalizado\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "10. Verificar status final",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{baseUrl}}/notebooks/service-tag/OLD001",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "notebooks",
+                                "service-tag",
+                                "OLD001"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
