@@ -1,105 +1,136 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { AppExceptionsService } from '../exceptions/app-exceptions.service';
 import * as ExcelJS from 'exceljs';
+import * as fs from 'fs';
+import * as path from 'path';
+import { formatDate, fileTimestamp } from '../utils/date.util';
 
 @Injectable()
 export class ExportService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private exceptions: AppExceptionsService
+  ) {}
 
-  async exportNotebooksToExcel(): Promise<Buffer> {
-    const notebooks = await this.prisma.notebook.findMany({
-      include: {
-        movements: true,
-        location: true, // Incluir a relação com Room
-      },
-    });
+  /**
+   * Exporta dados de notebooks para Excel
+   */
+  async exportNotebooksToExcel(): Promise<{ filePath: string, fileName: string }> {
+    try {
+      // Criar diretório para exportações se não existir
+      const exportDir = path.join(process.cwd(), 'exports');
+      if (!fs.existsSync(exportDir)) {
+        fs.mkdirSync(exportDir, { recursive: true });
+      }
 
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Notebooks');
+      // Gerar nome de arquivo baseado em timestamp
+      const timestamp = fileTimestamp();
+      const fileName = `notebooks-export-${timestamp}.xlsx`;
+      const filePath = path.join(exportDir, fileName);
 
-    // Define headers
-    worksheet.columns = [
-      { header: 'ID', key: 'id', width: 10 },
-      { header: 'Service Tag', key: 'serviceTag', width: 20 },
-      { header: 'Hostname', key: 'hostname', width: 20 },
-      { header: 'Brand', key: 'brand', width: 15 },
-      { header: 'Model', key: 'model', width: 15 },
-      { header: 'Type', key: 'notebookType', width: 15 },
-      { header: 'RAM', key: 'ramConfig', width: 15 },
-      { header: 'Status', key: 'status', width: 20 },
-      { header: 'Location', key: 'location', width: 20 },
-      { header: 'Analyst', key: 'responsibleAnalyst', width: 15 },
-      { header: 'Employee', key: 'zurichEmployee', width: 30 },
-      { header: 'Created At', key: 'createdAt', width: 20 },
-      { header: 'Updated At', key: 'updatedAt', width: 20 },
-    ];
-
-    // Add data
-    notebooks.forEach((notebook) => {
-      worksheet.addRow({
-        id: notebook.id,
-        serviceTag: notebook.serviceTag,
-        hostname: notebook.hostname || '',
-        brand: notebook.brand,
-        model: notebook.model,
-        notebookType: notebook.notebookType,
-        ramConfig: notebook.ramConfig,
-        status: notebook.status,
-        location: notebook.location?.name || '', // Usar o nome da sala
-        responsibleAnalyst: notebook.responsibleAnalyst,
-        zurichEmployee: notebook.zurichEmployee,
-        createdAt: notebook.createdAt.toLocaleDateString('en-US'),
-        updatedAt: notebook.updatedAt.toLocaleDateString('en-US'),
+      // Buscar dados
+      const notebooks = await this.prisma.notebook.findMany({
+        include: {
+          movements: true,
+          place: true,
+        },
       });
-    });
 
-    // Create another sheet for movements
-    const movementsSheet = workbook.addWorksheet('Movements');
-    
-    movementsSheet.columns = [
-      { header: 'ID', key: 'id', width: 10 },
-      { header: 'Notebook ID', key: 'notebookId', width: 15 },
-      { header: 'Service Tag', key: 'serviceTag', width: 20 },
-      { header: 'Origin Room', key: 'originRoom', width: 20 },
-      { header: 'Destiny Room', key: 'destinyRoom', width: 20 },
-      { header: 'Previous Status', key: 'previousStatus', width: 20 },
-      { header: 'New Status', key: 'newStatus', width: 20 },
-      { header: 'Analyst', key: 'analyst', width: 15 },
-      { header: 'Observation', key: 'observation', width: 40 },
-      { header: 'Date', key: 'createdAt', width: 20 },
-    ];
+      // Criar workbook e planilhas
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Notebooks');
+      
+      // Definir colunas
+      worksheet.columns = [
+        { header: 'ID', key: 'id', width: 10 },
+        { header: 'Service Tag', key: 'serviceTag', width: 20 },
+        { header: 'Hostname', key: 'hostname', width: 20 },
+        { header: 'Brand', key: 'brand', width: 15 },
+        { header: 'Model', key: 'model', width: 15 },
+        { header: 'Type', key: 'notebookType', width: 15 },
+        { header: 'RAM', key: 'ramConfig', width: 15 },
+        { header: 'Status', key: 'status', width: 20 },
+        { header: 'Location', key: 'location', width: 20 },
+        { header: 'Analyst', key: 'responsibleAnalyst', width: 15 },
+        { header: 'Employee', key: 'zurichEmployee', width: 30 },
+        { header: 'Created At', key: 'createdAt', width: 20 },
+        { header: 'Updated At', key: 'updatedAt', width: 20 },
+      ];
 
-    // Get all movements with related data
-    const movements = await this.prisma.movement.findMany({
-      include: {
-        notebook: true,
-        originRoom: true, // Incluir a sala de origem
-        destinyRoom: true, // Incluir a sala de destino
-      },
-    });
-
-    // Add movement data
-    movements.forEach((mov) => {
-      movementsSheet.addRow({
-        id: mov.id,
-        notebookId: mov.notebookId,
-        serviceTag: mov.notebook.serviceTag,
-        originRoom: mov.originRoom.name, // Usar o nome da sala
-        destinyRoom: mov.destinyRoom.name, // Usar o nome da sala
-        previousStatus: mov.previousStatus,
-        newStatus: mov.newStatus,
-        analyst: mov.analyst,
-        observation: mov.observation,
-        createdAt: mov.createdAt.toLocaleDateString('en-US'),
+      // Adicionar dados de notebooks
+      notebooks.forEach((notebook) => {
+        worksheet.addRow({
+          id: notebook.id,
+          serviceTag: notebook.serviceTag,
+          hostname: notebook.hostname || '',
+          brand: notebook.brand,
+          model: notebook.model,
+          notebookType: notebook.notebookType,
+          ramConfig: notebook.ramConfig,
+          status: notebook.status,
+          place: notebook.place?.name || '',
+          responsibleAnalyst: notebook.responsibleAnalyst,
+          zurichEmployee: notebook.zurichEmployee,
+          createdAt: formatDate(notebook.createdAt, 'dd/MM/yyyy HH:mm'),
+          updatedAt: formatDate(notebook.updatedAt, 'dd/MM/yyyy HH:mm'),
+        });
       });
-    });
 
-    // Format headers
-    worksheet.getRow(1).font = { bold: true };
-    movementsSheet.getRow(1).font = { bold: true };
+      // Criar planilha para movimentações
+      const movementsSheet = workbook.addWorksheet('Movements');
+      movementsSheet.columns = [
+        { header: 'ID', key: 'id', width: 10 },
+        { header: 'Notebook ID', key: 'notebookId', width: 15 },
+        { header: 'Service Tag', key: 'serviceTag', width: 20 },
+        { header: 'Origin Place', key: 'originPlace', width: 20 },
+        { header: 'Destiny Place', key: 'destinyPlace', width: 20 },
+        { header: 'Previous Status', key: 'previousStatus', width: 20 },
+        { header: 'New Status', key: 'newStatus', width: 20 },
+        { header: 'Analyst', key: 'analyst', width: 15 },
+        { header: 'Observation', key: 'observation', width: 40 },
+        { header: 'Date', key: 'createdAt', width: 20 },
+      ];
 
-    // Fix typing issue
-    const buffer = await workbook.xlsx.writeBuffer() as unknown as Buffer;
-    return buffer;
+      // Buscar movimentações com dados relacionados
+      const movements = await this.prisma.movement.findMany({
+        include: {
+          notebook: true,
+          originPlace: true,
+          destinyPlace: true,
+        },
+      });
+
+      // Adicionar dados de movimentações
+      movements.forEach((mov) => {
+        movementsSheet.addRow({
+          id: mov.id,
+          notebookId: mov.notebookId,
+          serviceTag: mov.notebook.serviceTag,
+          originPlace: mov.originPlace.name,
+          destinyPlace: mov.destinyPlace.name, 
+          previousStatus: mov.previousStatus,
+          newStatus: mov.newStatus,
+          analyst: mov.analyst,
+          observation: mov.observation,
+          createdAt: formatDate(mov.createdAt, 'dd/MM/yyyy HH:mm'),
+        });
+      });
+
+      // Formatação
+      worksheet.getRow(1).font = { bold: true };
+      movementsSheet.getRow(1).font = { bold: true };
+
+      // Salvar arquivo
+      await workbook.xlsx.writeFile(filePath);
+
+      // Retornar informações do arquivo
+      return {
+        filePath,
+        fileName
+      };
+    } catch (error) {
+      this.exceptions.internal(`Erro ao exportar para Excel: ${error.message}`);
+    }
   }
 }

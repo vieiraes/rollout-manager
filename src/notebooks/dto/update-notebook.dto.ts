@@ -1,7 +1,11 @@
-import { Analyst, NotebookType, RamConfig, Status } from '@prisma/client';
-import { IsOptional, IsString, IsEnum, IsNumber } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString } from 'class-validator';
+import { NotebookType, RamConfig, Status, Analyst } from '@prisma/client';
 
 export class UpdateNotebookDto {
+  @IsOptional()
+  @IsString()
+  serviceTag?: string;
+
   @IsOptional()
   @IsString()
   hostname?: string;
@@ -27,11 +31,11 @@ export class UpdateNotebookDto {
   status?: Status;
 
   @IsOptional()
-  @IsNumber()
-  locationId?: number; // Alterado para locationId
+  @IsInt()
+  placeId?: number;
 
   @IsOptional()
-  @IsNumber()
+  @IsInt()
   oldNotebookId?: number;
 
   @IsOptional()

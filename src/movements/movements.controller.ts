@@ -23,18 +23,18 @@ export class MovementsController {
     return this.movementsService.findAll();
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<Movement> {
+    return this.movementsService.findOne(+id);
+  }
+
   @Get('notebook/:id')
-  findByNotebook(@Param('id') id: string): Promise<Movement[]> {
-    return this.movementsService.findByNotebook(+id);
+  findByNotebookId(@Param('id') id: string): Promise<Movement[]> {
+    return this.movementsService.findByNotebookId(+id);
   }
 
   @Get('service-tag/:serviceTag')
   findByServiceTag(@Param('serviceTag') serviceTag: string): Promise<Movement[]> {
     return this.movementsService.findByServiceTag(serviceTag);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<Movement> {
-    return this.movementsService.findOne(+id);
   }
 }

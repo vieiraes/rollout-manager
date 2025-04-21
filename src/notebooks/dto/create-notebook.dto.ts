@@ -1,8 +1,8 @@
-import { Analyst, NotebookType, RamConfig, Status } from '@prisma/client';
-import { IsNotEmpty, IsString, IsOptional, IsEnum, IsNumber } from 'class-validator';
+import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { NotebookType, RamConfig, Status, Analyst } from '@prisma/client';
 
 export class CreateNotebookDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Service Tag é obrigatório' })
   @IsString()
   serviceTag: string;
 
@@ -12,27 +12,31 @@ export class CreateNotebookDto {
 
   @IsOptional()
   @IsString()
-  brand?: string;
+  brand?: string = 'Dell';
 
   @IsOptional()
   @IsString()
-  model?: string;
+  model?: string = '5450';
 
   @IsOptional()
   @IsEnum(NotebookType)
-  notebookType?: NotebookType;
+  notebookType?: NotebookType = NotebookType.NEW;
 
   @IsOptional()
   @IsEnum(RamConfig)
-  ramConfig?: RamConfig;
+  ramConfig?: RamConfig = RamConfig.GB16;
 
   @IsOptional()
   @IsEnum(Status)
-  status?: Status;
+  status?: Status = Status.PENDING_HOMOLOGATION;
 
   @IsOptional()
-  @IsNumber()
-  locationId?: number; // Alterado para locationId
+  @IsInt()
+  placeId?: number;
+
+  @IsOptional()
+  @IsInt()
+  oldNotebookId?: number;
 
   @IsOptional()
   @IsEnum(Analyst)

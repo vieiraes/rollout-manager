@@ -1,32 +1,26 @@
-import { Status, NotebookType } from '@prisma/client';
-import { IsEnum, IsInt, IsOptional, IsString, Min, Max } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
+import { NotebookType, Status } from '@prisma/client';
 
 export class NotebookQueryDto {
-  // Paginação com valores padrão
   @IsOptional()
-  @IsInt()
-  @Min(1)
   @Type(() => Number)
-  page: number = 1; // Valor padrão definido
+  @IsInt()
+  page?: number;
 
   @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Max(100)
   @Type(() => Number)
-  limit: number = 10; // Valor padrão definido
-
-  // Ordenação com valores padrão
-  @IsOptional()
-  @IsString()
-  sortBy: string = 'createdAt'; // Valor padrão definido
+  @IsInt()
+  limit?: number;
 
   @IsOptional()
   @IsString()
-  sortOrder: 'asc' | 'desc' = 'desc'; // Valor padrão definido
+  sortBy?: string;
 
-  // Filtros
+  @IsOptional()
+  @IsString()
+  sortOrder?: 'asc' | 'desc';
+
   @IsOptional()
   @IsEnum(Status)
   status?: Status;
@@ -36,11 +30,10 @@ export class NotebookQueryDto {
   notebookType?: NotebookType;
 
   @IsOptional()
-  @IsInt()
   @Type(() => Number)
-  locationId?: number;
+  @IsInt()
+  placeId?: number;
 
-  // Busca
   @IsOptional()
   @IsString()
   search?: string;

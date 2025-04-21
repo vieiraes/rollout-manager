@@ -27,12 +27,12 @@ model Notebook {
   brand        String        @default("Dell")
   model        String        @default("5450")
   notebookType NotebookType  @default(NEW)
-  ramConfig    RamConfig     @default(GB16)  // Corrigido de 16GB para GB16
+  ramConfig    RamConfig     @default(GB16)
   status       Status        @default(PENDING_HOMOLOGATION)
   
-  // Campos alterados
-  locationId   Int           @default(1)      // ID da sala relacionada
-  location     Room          @relation(fields: [locationId], references: [id])
+  // Campos alterados - location -> place
+  placeId      Int           @default(1)
+  place        Place         @relation(fields: [placeId], references: [id])
   
   // Outros campos permanecem os mesmos
   oldNotebookId Int?         @unique
@@ -52,12 +52,12 @@ model Movement {
   notebook     Notebook @relation(fields: [notebookId], references: [id])
   notebookId   Int
   
-  // Campos alterados para relacionamentos com Room
-  originRoomId Int
-  originRoom   Room     @relation("OriginRoom", fields: [originRoomId], references: [id])
+  // Campos alterados para relacionamentos com Place
+  originPlaceId Int
+  originPlace   Place   @relation("OriginPlace", fields: [originPlaceId], references: [id])
   
-  destinyRoomId Int
-  destinyRoom   Room    @relation("DestinyRoom", fields: [destinyRoomId], references: [id])
+  destinyPlaceId Int
+  destinyPlace   Place  @relation("DestinyPlace", fields: [destinyPlaceId], references: [id])
   
   // Outros campos permanecem os mesmos
   previousStatus Status
@@ -67,28 +67,28 @@ model Movement {
   createdAt    DateTime @default(now())
 }
 
-model Room {
+model Place {
   id          Int       @id @default(autoincrement())
-  name        String    @unique  // Nome da sala (ex: ROOM_01)
-  description String?   // Descrição opcional da sala
+  name        String    @unique
+  description String?
   isActive    Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  notebooks   Notebook[] // Relação com notebooks nesta sala
+  notebooks   Notebook[] // Relação com notebooks neste local
   
   // Campos para rastrear movimentações de origem e destino
-  originsMovements  Movement[] @relation("OriginRoom")
-  destinyMovements  Movement[] @relation("DestinyRoom")
+  originsMovements  Movement[] @relation("OriginPlace")
+  destinyMovements  Movement[] @relation("DestinyPlace")
 }
 
 enum Status {
-  PENDING_HOMOLOGATION  // Alterado de "PENDENTE_HOMOLOGACAO"
-  HOMOLOGATED           // Alterado de "HOMOLOGADA"
-  IN_HOMOLOGATION       // Alterado de "EM_HOMOLOGACAO"
-  IN_ROLLOUT            // Alterado de "EM_ROLLOUT"
-  DELIVERED             // Alterado de "ENTREGUE"
-  RETURNED              // Alterado de "DEVOLUCAO"
-  COMPLETED             // Alterado de "FINALIZADO"
+  PENDING_HOMOLOGATION
+  HOMOLOGATED
+  IN_HOMOLOGATION
+  IN_ROLLOUT
+  DELIVERED
+  RETURNED
+  COMPLETED
 }
 
 enum Analyst {
@@ -99,12 +99,12 @@ enum Analyst {
 }
 
 enum NotebookType {
-  NEW                   // Alterado de "NOVO"
-  OLD                   // Alterado de "ANTIGO"
+  NEW
+  OLD
 }
 
 enum RamConfig {
-  GB16      // Simplificado de RAM_16GB
-  GB32      // Simplificado de RAM_32GB
-  OTHER     // Mantido
+  GB16
+  GB32
+  OTHER
 }
