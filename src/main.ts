@@ -7,7 +7,9 @@ async function bootstrap() {
   process.env.TZ = 'America/Sao_Paulo';
   
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true // Habilita a transformação automática
+  }));
   app.enableCors();
   
   await app.listen(3344);

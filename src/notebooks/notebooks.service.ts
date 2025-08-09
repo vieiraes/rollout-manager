@@ -83,7 +83,7 @@ export class NotebooksService {
     const data = await this.prisma.notebook.findMany({
       where,
       skip,
-      take: limit,
+      take: limit,//preciso converter isso como inteiro
       orderBy,
       include: {
         place: true
