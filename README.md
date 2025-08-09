@@ -33,6 +33,18 @@ Rollout Manager é uma API RESTful desenvolvida com NestJS e Prisma que gerencia
 - **Banco de Dados**: SQLite (desenvolvimento) / PostgreSQL (produção)
 - **Documentação**: Postman Collection
 
+## 📚 Documentação da API
+
+A documentação completa da API está disponível através de uma collection do Postman:
+
+1. Importe o arquivo `postman_collection.json` no Postman
+2. A collection inclui todos os endpoints organizados por recursos:
+   - Notebooks
+   - Movements (Movimentações)
+   - Places (Salas)
+   - Export (Exportação)
+3. Inclui também um fluxo completo de rollout com exemplos práticos de uso
+
 ## 🏁 Início Rápido
 
 1. **Clone o repositório**
