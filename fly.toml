@@ -1,4 +1,4 @@
-app = 'rollount-manager-backend'
+app = 'rollout-manager'
 primary_region = 'gru'
 
 [processes]
