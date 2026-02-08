@@ -72,15 +72,15 @@ description: "Complete refactor from NestJS to Next.js 15 BFF with mobile-first 
 
 ### Implementation for User Story 1
 
-- [ ] T021 [P] [US1] Create NotebooksService class in lib/services/notebooks.service.ts (migrate from src/notebooks/notebooks.service.ts)
-- [ ] T022 [P] [US1] Create GET/POST handler in app/api/notebooks/route.ts
-- [ ] T023 [P] [US1] Create GET/PATCH/DELETE handler in app/api/notebooks/[id]/route.ts
-- [ ] T024 [P] [US1] Create GET handler in app/api/notebooks/service-tag/[tag]/route.ts
-- [ ] T025 [P] [US1] Create GET handler in app/api/notebooks/inventory/route.ts with query params support
-- [ ] T026 [US1] Add request validation using Zod schemas in all notebook routes
-- [ ] T027 [US1] Add error handling and proper HTTP status codes in all notebook routes
-- [ ] T028 [US1] Add pagination logic to GET /api/notebooks endpoint
-- [ ] T029 [US1] Test all notebook API endpoints with Postman/curl
+- [X] T021 [P] [US1] Create NotebooksService class in lib/services/notebooks.service.ts (migrate from src/notebooks/notebooks.service.ts)
+- [X] T022 [P] [US1] Create GET/POST handler in app/api/notebooks/route.ts
+- [X] T023 [P] [US1] Create GET/PATCH/DELETE handler in app/api/notebooks/[id]/route.ts
+- [X] T024 [P] [US1] Create GET handler in app/api/notebooks/service-tag/[tag]/route.ts
+- [X] T025 [P] [US1] Create GET handler in app/api/notebooks/inventory/route.ts with query params support
+- [X] T026 [US1] Add request validation using Zod schemas in all notebook routes
+- [X] T027 [US1] Add error handling and proper HTTP status codes in all notebook routes
+- [X] T028 [US1] Add pagination logic to GET /api/notebooks endpoint
+- [X] T029 [US1] Test all notebook API endpoints with Postman/curl
 
 **Checkpoint**: Notebooks API fully functional and returning proper responses
 
