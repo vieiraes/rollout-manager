@@ -119,7 +119,7 @@ description: "Complete refactor from NestJS to Next.js 15 BFF with mobile-first 
 ### Implementation for User Story 3
 
 - [X] T041 [US3] Create ExportService class in lib/services/export.service.ts (migrate from src/export/export.service.ts)
-- [X] T042 [US3] Create GET handler in app/api/export/notebooks/route.ts with Excel download response
+- [X] T042 [US3] Create GET handler in app/api/export/notebooks/route.ts with Excel dohttps://www.softeventos.com.br/servicos-2/wnload response
 - [X] T043 [US3] Ensure exports/ directory is created and writable
 - [X] T044 [US3] Add proper headers for file download (Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
 - [X] T045 [US3] Test Excel export generates valid file with correct data
@@ -136,20 +136,20 @@ description: "Complete refactor from NestJS to Next.js 15 BFF with mobile-first 
 
 ### Implementation for User Story 4
 
-- [ ] T046 [P] [US4] Create notebook list page in app/(dashboard)/notebooks/page.tsx with mobile-optimized cards
-- [ ] T047 [P] [US4] Create notebook detail page in app/(dashboard)/notebooks/[id]/page.tsx with mobile layout
-- [ ] T048 [P] [US4] Create new notebook page in app/(dashboard)/notebooks/novo/page.tsx
-- [ ] T049 [P] [US4] Create NotebookCard component in components/notebooks/notebook-card.tsx optimized for touch/tap
-- [ ] T050 [P] [US4] Create NotebookList component in components/notebooks/notebook-list.tsx with virtual scrolling for performance
-- [ ] T051 [US4] Create NotebookForm component in components/notebooks/notebook-form.tsx with mobile-friendly inputs
-- [ ] T052 [US4] Add form validation with React Hook Form + Zod in NotebookForm
-- [ ] T053 [US4] Create server action in lib/actions/notebooks.actions.ts for form submissions
-- [ ] T054 [US4] Add loading states and optimistic updates for better mobile UX
-- [ ] T055 [US4] Add pull-to-refresh functionality for notebook list on mobile
-- [ ] T056 [US4] Add search and filter UI optimized for mobile (bottom sheet style)
-- [ ] T057 [US4] Add pagination controls with infinite scroll for mobile
-- [ ] T058 [US4] Test responsive layout on mobile viewport (375px width)
-- [ ] T059 [US4] Add touch-friendly action buttons (min 44px tap targets)
+- [X] T046 [P] [US4] Create notebook list page in app/(dashboard)/notebooks/page.tsx with mobile-optimized cards
+- [X] T047 [P] [US4] Create notebook detail page in app/(dashboard)/notebooks/[id]/page.tsx with mobile layout
+- [X] T048 [P] [US4] Create new notebook page in app/(dashboard)/notebooks/novo/page.tsx
+- [X] T049 [P] [US4] Create NotebookCard component in components/notebooks/notebook-card.tsx optimized for touch/tap
+- [X] T050 [P] [US4] Create NotebookList component in components/notebooks/notebook-list.tsx with virtual scrolling for performance
+- [X] T051 [US4] Create NotebookForm component in components/notebooks/notebook-form.tsx with mobile-friendly inputs
+- [X] T052 [US4] Add form validation with React Hook Form + Zod in NotebookForm
+- [X] T053 [US4] Create server action in lib/actions/notebooks.actions.ts for form submissions
+- [X] T054 [US4] Add loading states and optimistic updates for better mobile UX
+- [X] T055 [US4] Add pull-to-refresh functionality for notebook list on mobile
+- [X] T056 [US4] Add search and filter UI optimized for mobile (bottom sheet style)
+- [X] T057 [US4] Add pagination controls with infinite scroll for mobile
+- [X] T058 [US4] Test responsive layout on mobile viewport (375px width)
+- [X] T059 [US4] Add touch-friendly action buttons (min 44px tap targets)
 
 **Checkpoint**: Notebooks module fully functional on mobile devices with excellent UX
 
