@@ -8,7 +8,7 @@ import { Package, Move, MapPin, Home } from 'lucide-react';
 const navigation = [
   {
     name: 'Dashboard',
-    href: '/',
+    href: '/dashboard',
     icon: Home,
   },
   {

@@ -1,6 +1,5 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/notebooks/route": "app/api/notebooks/route.js",
   "/(dashboard)/notebooks/page": "app/(dashboard)/notebooks/page.js",
   "/(dashboard)/notebooks/[id]/page": "app/(dashboard)/notebooks/[id]/page.js"
 }
