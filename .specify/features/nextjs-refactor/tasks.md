@@ -163,16 +163,16 @@ description: "Complete refactor from NestJS to Next.js 15 BFF with mobile-first 
 
 ### Implementation for User Story 5
 
-- [ ] T060 [P] [US5] Create movements list page in app/(dashboard)/movements/page.tsx with timeline view for mobile
-- [ ] T061 [P] [US5] Create new movement page in app/(dashboard)/movements/novo/page.tsx
-- [ ] T062 [P] [US5] Create places list page in app/(dashboard)/places/page.tsx with grid layout for mobile
-- [ ] T063 [P] [US5] Create place detail page in app/(dashboard)/places/[id]/page.tsx
-- [ ] T064 [P] [US5] Create MovementCard component in components/movements/movement-card.tsx with timeline style
-- [ ] T065 [P] [US5] Create MovementForm component in components/movements/movement-form.tsx with mobile inputs
-- [ ] T066 [P] [US5] Create PlaceCard component in components/places/place-card.tsx
-- [ ] T067 [P] [US5] Create PlaceForm component in components/places/place-form.tsx
-- [ ] T068 [US5] Add service tag scanner placeholder in movement form (text input for now, camera icon for future)
-- [ ] T069 [US5] Create server actions in lib/actions/movements.actions.ts
+- [X] T060 [P] [US5] Create movements list page in app/(dashboard)/movements/page.tsx with timeline view for mobile
+- [X] T061 [P] [US5] Create new movement page in app/(dashboard)/movements/novo/page.tsx
+- [X] T062 [P] [US5] Create places list page in app/(dashboard)/places/page.tsx with grid layout for mobile
+- [X] T063 [P] [US5] Create place detail page in app/(dashboard)/places/[id]/page.tsx
+- [X] T064 [P] [US5] Create MovementCard component in components/movements/movement-card.tsx with timeline style
+- [X] T065 [P] [US5] Create MovementForm component in components/movements/movement-form.tsx with mobile inputs
+- [X] T066 [P] [US5] Create PlaceCard component in components/places/place-card.tsx
+- [X] T067 [P] [US5] Create PlaceForm component in components/places/place-form.tsx
+- [X] T068 [US5] Add service tag scanner placeholder in movement form (text input for now, camera icon for future)
+- [X] T069 [US5] Create server actions in lib/actions/movements.actions.ts
 - [ ] T070 [US5] Create server actions in lib/actions/places.actions.ts
 - [ ] T071 [US5] Add form validation for all forms
 - [ ] T072 [US5] Test movements and places UI on mobile viewport
