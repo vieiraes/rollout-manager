@@ -94,17 +94,17 @@ description: "Complete refactor from NestJS to Next.js 15 BFF with mobile-first 
 
 ### Implementation for User Story 2
 
-- [ ] T030 [P] [US2] Create MovementsService class in lib/services/movements.service.ts (migrate from src/movements/movements.service.ts)
-- [ ] T031 [P] [US2] Create PlacesService class in lib/services/places.service.ts (migrate from src/places/places.service.ts)
-- [ ] T032 [P] [US2] Create GET/POST handler in app/api/movements/route.ts
-- [ ] T033 [P] [US2] Create POST handler in app/api/movements/by-service-tag/route.ts
-- [ ] T034 [P] [US2] Create GET handler in app/api/movements/[id]/route.ts
-- [ ] T035 [P] [US2] Create GET handler in app/api/movements/notebook/[id]/route.ts
-- [ ] T036 [P] [US2] Create GET/POST handler in app/api/places/route.ts
-- [ ] T037 [P] [US2] Create GET/PATCH/DELETE handler in app/api/places/[id]/route.ts
-- [ ] T038 [US2] Add request validation using Zod schemas in all movement and place routes
-- [ ] T039 [US2] Add error handling in all movement and place routes
-- [ ] T040 [US2] Test movements and places API endpoints
+- [X] T030 [P] [US2] Create MovementsService class in lib/services/movements.service.ts (migrate from src/movements/movements.service.ts)
+- [X] T031 [P] [US2] Create PlacesService class in lib/services/places.service.ts (migrate from src/places/places.service.ts)
+- [X] T032 [P] [US2] Create GET/POST handler in app/api/movements/route.ts
+- [X] T033 [P] [US2] Create POST handler in app/api/movements/by-service-tag/route.ts
+- [X] T034 [P] [US2] Create GET handler in app/api/movements/[id]/route.ts
+- [X] T035 [P] [US2] Create GET handler in app/api/movements/notebook/[id]/route.ts
+- [X] T036 [P] [US2] Create GET/POST handler in app/api/places/route.ts
+- [X] T037 [P] [US2] Create GET/PATCH/DELETE handler in app/api/places/[id]/route.ts
+- [X] T038 [US2] Add request validation using Zod schemas in all movement and place routes
+- [X] T039 [US2] Add error handling in all movement and place routes
+- [X] T040 [US2] Test movements and places API endpoints
 
 **Checkpoint**: Movements and Places APIs fully functional
 
@@ -118,11 +118,11 @@ description: "Complete refactor from NestJS to Next.js 15 BFF with mobile-first 
 
 ### Implementation for User Story 3
 
-- [ ] T041 [US3] Create ExportService class in lib/services/export.service.ts (migrate from src/export/export.service.ts)
-- [ ] T042 [US3] Create GET handler in app/api/export/notebooks/route.ts with Excel download response
-- [ ] T043 [US3] Ensure exports/ directory is created and writable
-- [ ] T044 [US3] Add proper headers for file download (Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
-- [ ] T045 [US3] Test Excel export generates valid file with correct data
+- [X] T041 [US3] Create ExportService class in lib/services/export.service.ts (migrate from src/export/export.service.ts)
+- [X] T042 [US3] Create GET handler in app/api/export/notebooks/route.ts with Excel download response
+- [X] T043 [US3] Ensure exports/ directory is created and writable
+- [X] T044 [US3] Add proper headers for file download (Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet)
+- [X] T045 [US3] Test Excel export generates valid file with correct data
 
 **Checkpoint**: Export functionality works and generates proper Excel files
 
